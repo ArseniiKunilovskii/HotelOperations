@@ -5,28 +5,25 @@ public class Employee {
     private String name;
     private String department;
     private double payRate;
-    private int hoursWorked;
+    private double hoursWorked;
+    private double currentShift;
 
-    public Employee(int employeeId, String name, String department, double payRate, int hoursWorked) {
+    public Employee(int employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
         this.name = name;
         this.department = department;
         this.payRate = payRate;
         this.hoursWorked = hoursWorked;
     }
-    public Employee(){
 
-    }
-    public double getTotalPay(){
-        return this.payRate*getRegularHours()+getOvertimeHOurs()*payRate*2;
+    public void punchIn(double time){
+        currentShift = time;
     }
 
-    public double getRegularHours() {
-        return Math.max(hoursWorked, 40);
-    }
-
-    public double getOvertimeHOurs(){
-        return hoursWorked>40 ? hoursWorked-40: 0;
+    public void punchOut(double time){
+        currentShift = time - currentShift;
+        hoursWorked = currentShift;
+        currentShift = 0;
     }
 
     public int getEmployeeId() {
@@ -37,15 +34,39 @@ public class Employee {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public double getPayRate() {
+        return payRate;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+
+    public double getTotalPay() {
+        if (hoursWorked <= 40) {
+            return hoursWorked * payRate;
+        } else {
+            return (40 * payRate) + ((hoursWorked - 40) * (payRate * 1.5));
+        }
+    }
+
+    public double getRegularHours() {
+        if (hoursWorked <= 40) {
+            return hoursWorked;
+        } else {
+            return 40;
+        }
+    }
+
+    public double getOvertimeHours() {
+        if (hoursWorked > 40) {
+            return hoursWorked - 40;
+        } else {
+            return 0;
+        }
     }
 }
