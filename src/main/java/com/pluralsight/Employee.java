@@ -11,7 +11,7 @@ public class Employee {
     private double payRate;
     private double hoursWorked;
     private double currentShift = 0;
-    private LocalDateTime start;
+
 
     public Employee(int employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
@@ -32,10 +32,19 @@ public class Employee {
     }
 
     public void punchTimeCard(){
-        if(start==null){
-            start=LocalDateTime.now();
-        }else {
+        if(currentShift==0){
+            LocalDateTime start = LocalDateTime.now();
+            int hours = start.getHour();
+            int minutes=start.getMinute();
+            currentShift = hours+((double) minutes /60);
 
+        }else {
+            LocalDateTime start = LocalDateTime.now();
+            int hours = start.getHour();
+            int minutes=start.getMinute();
+            currentShift = hours+((double) minutes /60) - currentShift;
+            hoursWorked+=currentShift;
+            currentShift=0;
         }
     }
 
