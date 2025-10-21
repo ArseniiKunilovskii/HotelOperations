@@ -6,7 +6,7 @@ public class Employee {
     private String department;
     private double payRate;
     private double hoursWorked;
-    private double currentShift;
+    private double currentShift = 0;
 
     public Employee(int employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
@@ -17,9 +17,9 @@ public class Employee {
     }
 
     public void punchTimeCard(String input, double time){
-        if(input.equalsIgnoreCase("in")){
+        if(currentShift == 0){
             currentShift = time;
-        } else if (input.equalsIgnoreCase("out")) {
+        } else {
             currentShift = time - currentShift;
             hoursWorked = currentShift;
             currentShift = 0;
