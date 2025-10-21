@@ -16,14 +16,14 @@ public class Employee {
         this.hoursWorked = hoursWorked;
     }
 
-    public void punchIn(double time){
-        currentShift = time;
-    }
-
-    public void punchOut(double time){
-        currentShift = time - currentShift;
-        hoursWorked = currentShift;
-        currentShift = 0;
+    public void punchTimeCard(String input, double time){
+        if(input.equalsIgnoreCase("in")){
+            currentShift = time;
+        } else if (input.equalsIgnoreCase("out")) {
+            currentShift = time - currentShift;
+            hoursWorked = currentShift;
+            currentShift = 0;
+        }
     }
 
     public int getEmployeeId() {
